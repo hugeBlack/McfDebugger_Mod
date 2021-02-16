@@ -10,10 +10,11 @@
   ],
   "contact": {
     "homepage": "https://space.bilibili.com/13687417",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/hugeBlack/McfDebugger_Mod",
+    "bilibili": "https://space.bilibili.com/13687417"
   },
 
-  "license": "CC-BY-NC-SA 4.0",
+  "license": "CC 1.0",
   "icon": "assets/mcfdebugger/icon.png",
 
   "environment": "*",
