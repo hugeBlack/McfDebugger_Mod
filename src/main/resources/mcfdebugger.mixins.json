@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.hb.mcfdebugger.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "regcmd",
+    "debugHook",
+    "CommandFunctionManagerHook",
+    "SetCommandIndex",
+    "FunctionLoaderHook",
+    "ErrorHook",
+    "ServerLoad",
+    "FunctionCommandHook",
+    "ServerCommandSourceHook"
+  ],
+  "client": [
+    "ExampleMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
