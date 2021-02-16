@@ -5,7 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "regcmd",
-    "debugHook",
+    "DebugHook",
     "CommandFunctionManagerHook",
     "SetCommandIndex",
     "FunctionLoaderHook",

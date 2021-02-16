@@ -55,6 +55,9 @@ jar {
 	from("LICENSE") {
 		rename { "${it}_${project.archivesBaseName}"}
 	}
+	from {
+		configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+	}
 }
 
 // configure the maven publication

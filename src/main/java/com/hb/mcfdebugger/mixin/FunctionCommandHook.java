@@ -1,19 +1,15 @@
 package com.hb.mcfdebugger.mixin;
 
 import com.hb.mcfdebugger.McfDebugger;
-import com.hb.mcfdebugger.SendCmdObj;
 import net.minecraft.server.command.FunctionCommand;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.function.CommandFunction;
 import net.minecraft.text.TranslatableText;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import com.hb.mcfdebugger.a;
 
-import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedList;
 
 @Mixin(FunctionCommand.class)
 public class FunctionCommandHook {
