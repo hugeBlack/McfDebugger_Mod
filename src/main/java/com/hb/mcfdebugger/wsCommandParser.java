@@ -130,7 +130,7 @@ public class wsCommandParser {
                 };
                 executor.setCommand("reload");
                 executor.execute(McfDebugger.mcServer.getOverworld());
-                wsCommandParser.sendMsg("mcfdebugger.reloadCommand");
+                wsCommandParser.sendMsg("mcfdebugger.reload_command");
                 SendFeedBack("reloaded.","Success");
                 break;
             case "getVersion":

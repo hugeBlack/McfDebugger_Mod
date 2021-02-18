@@ -1,7 +1,7 @@
 {
   "mcfdebugger.enabled": "函数调试器已启用.",
   "mcfdebugger.disabled": "函数调试器已禁用.",
-  "mcfdebugger.setPort": "函数调试器的Websocket服务器端口已设置为%s.",
-  "mcfdebugger.setTimeOut": "设置超时时间:%s秒.",
-  "mcfdebugger.reloadCommand": "接收到调试器发来的重载指令."
+  "mcfdebugger.set_port": "函数调试器的Websocket服务器端口已设置为%d.",
+  "mcfdebugger.set_timeOut": "设置超时时间:%d秒.",
+  "mcfdebugger.reload_command": "接收到调试器发来的重载指令."
 }

@@ -1,7 +1,7 @@
 {
   "mcfdebugger.enabled": "Function debugger has been enabled.",
   "mcfdebugger.disabled": "Function debugger has been disabled.",
-  "mcfdebugger.setPort": "The Websocket server port of function debugger has been set to port:%s",
-  "mcfdebugger.setTimeOut": "Set timeout:%ss",
-  "mcfdebugger.reloadCommand": "Debugger sent a reload command."
+  "mcfdebugger.set_port": "The Websocket server port of function debugger has been set to port:%d",
+  "mcfdebugger.set_timeOut": "Set timeout:%d s",
+  "mcfdebugger.reload_command": "Debugger sent a reload command."
 }

@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayDeque;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -48,9 +49,8 @@ public class ErrorHook {
         sourceMap.put("rotation","("+source.getRotation().y+", "+source.getRotation().x+")");
         sourceMap.put("world",source.getWorld().getRegistryKey().getValue().toString());
         try {
-            Field levelField = source.getClass().getDeclaredField("level");
-            levelField.setAccessible(true);
-            sourceMap.put("level",( levelField.get(source)).toString());
+            Method levelMethod = source.getClass().getDeclaredMethod("fakeGetLevel");
+            sourceMap.put("level", String.valueOf(levelMethod.invoke(source)));
         } catch (ReflectiveOperationException e) {
             sourceMap.put("level","Error");
         }

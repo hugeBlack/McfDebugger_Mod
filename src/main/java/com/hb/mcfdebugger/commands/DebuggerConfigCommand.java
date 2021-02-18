@@ -45,7 +45,7 @@ public class DebuggerConfigCommand {
                                             if (IntegerArgumentType.getInteger(cmd, "port") < 65536 && IntegerArgumentType.getInteger(cmd, "port") > 0) {
                                                 McfDebugger.configList.put("port", IntegerArgumentType.getInteger(cmd, "port"));
                                                 McfDebugger.configManager.writeConfig();
-                                                cmd.getSource().sendFeedback(new TranslatableText("mcfdebugger.setPort", IntegerArgumentType.getInteger(cmd, "port")), true);
+                                                cmd.getSource().sendFeedback(new TranslatableText("mcfdebugger.set_port", IntegerArgumentType.getInteger(cmd, "port")), true);
                                                 McfDebugger.thread.restartWsServer(McfDebugger.configList.get("port"), McfDebugger.configList.get("timeOut"));
                                                 return 1;
                                             }
@@ -60,7 +60,7 @@ public class DebuggerConfigCommand {
                                             if (IntegerArgumentType.getInteger(cmd, "timeOut") > 0) {
                                                 McfDebugger.configList.put("enable", IntegerArgumentType.getInteger(cmd, "timeOut"));
                                                 McfDebugger.configManager.writeConfig();
-                                                cmd.getSource().sendFeedback(new TranslatableText("mcfdebugger.setTimeOut", IntegerArgumentType.getInteger(cmd, "timeOut")), true);
+                                                cmd.getSource().sendFeedback(new TranslatableText("mcfdebugger.set_time_out", IntegerArgumentType.getInteger(cmd, "timeOut")), true);
                                                 DebugThread.wsserver.setConnectionLostTimeout(IntegerArgumentType.getInteger(cmd, "timeOut"));
                                                 return 1;
                                             }
