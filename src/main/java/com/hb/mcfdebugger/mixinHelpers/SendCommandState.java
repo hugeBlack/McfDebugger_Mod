@@ -45,10 +45,10 @@ public class SendCommandState {
                 sourceMap.put("rotation","("+source.getRotation().x+", "+source.getRotation().y+")");
                 sourceMap.put("world",source.getWorld().getRegistryKey().getValue().toString());
                 try {
-                    Method levelMethod = source.getClass().getDeclaredMethod("fakeGetLevel");
-                    sourceMap.put("level", String.valueOf(levelMethod.invoke(source)));
+                    Field levelField = source.getClass().getDeclaredField("fakeLevel");
+                    sourceMap.put("level",String.valueOf(levelField.get(element)));
                 } catch (ReflectiveOperationException e) {
-                    sourceMap.put("level","Error");
+                    DebugThread.sendObjMsgToDebugger(e.getMessage(),"e");
                 }
                 sourceMap.put("commandsLeftToMaxChainLength", String.valueOf(McfDebugger.commandsLeftToMaxChainLength));
                 SendCmdObj sendCmdObj = new SendCmdObj(funNamespace, funPath, cmdIndex, element.toString(),true,sourceMap);
