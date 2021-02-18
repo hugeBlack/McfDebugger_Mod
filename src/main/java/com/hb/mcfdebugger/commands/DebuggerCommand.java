@@ -8,16 +8,19 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
-import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.command.argument.ObjectiveArgumentType;
-import net.minecraft.command.argument.ScoreHolderArgumentType;
+import net.minecraft.command.argument.*;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec2f;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.ChunkStatus;
 
 public class DebuggerCommand {
     public static final SimpleCommandExceptionType LOGGER_HIT_EXCEPTION = new SimpleCommandExceptionType(new TranslatableText("MCFDEBUGGER: Logger hit."));
     public static final SimpleCommandExceptionType CONSOLE_LOG_HIT_EXCEPTION = new SimpleCommandExceptionType(new TranslatableText("MCFDEBUGGER: Logger hit."));
+
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         LiteralArgumentBuilder<ServerCommandSource> literalArgumentBuilder = CommandManager.literal("debuggerCmd").
                 requires(source -> source.hasPermissionLevel(2))
@@ -44,13 +47,7 @@ public class DebuggerCommand {
                                                 }
                                         )
                                 )
-                        ))
-                .then(CommandManager.literal("all")
-                        .executes((CommandContext<ServerCommandSource> cmd) -> {
-                                    return 1;
-                                }
                         )
-
                 )
                 .then(CommandManager.literal("getEntity")
                         .then(CommandManager.argument("targets", EntityArgumentType.entities())
@@ -69,7 +66,7 @@ public class DebuggerCommand {
                                 }
                         )
 
-                )                
+                )
                 .then(CommandManager.literal("log")
                         .executes((CommandContext<ServerCommandSource> cmd) -> {
                                     McfDebugger.nowCommandCount--;
@@ -77,7 +74,8 @@ public class DebuggerCommand {
                                 }
                         )
 
-                );
+                )
+;
         dispatcher.register(literalArgumentBuilder);
     }
 
@@ -117,6 +115,7 @@ public class DebuggerCommand {
         }
         return 1;
     }
+
     public static int log(CommandContext<ServerCommandSource> cmd) throws CommandSyntaxException {
         if (!McfDebugger.debuggerMode.equals("none")) {
             McfDebugger.nowLogFunNamespace = McfDebugger.lastCmdObj.funNamespace;

@@ -10,6 +10,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -44,9 +45,8 @@ public class SendCommandState {
                 sourceMap.put("rotation","("+source.getRotation().x+", "+source.getRotation().y+")");
                 sourceMap.put("world",source.getWorld().getRegistryKey().getValue().toString());
                 try {
-                    Field levelField = source.getClass().getDeclaredField("level");
-                    levelField.setAccessible(true);
-                    sourceMap.put("level",( levelField.get(source)).toString());
+                    Method levelMethod = source.getClass().getDeclaredMethod("fakeGetLevel");
+                    sourceMap.put("level", String.valueOf(levelMethod.invoke(source)));
                 } catch (ReflectiveOperationException e) {
                     sourceMap.put("level","Error");
                 }

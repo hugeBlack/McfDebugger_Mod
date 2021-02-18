@@ -133,6 +133,8 @@ public class wsCommandParser {
                 wsCommandParser.sendMsg("mcfdebugger.reloadCommand");
                 SendFeedBack("reloaded.","Success");
                 break;
+            case "getVersion":
+                DebugThread.sendObjMsgToDebugger("2","versionResult");
             default:
                 SendFeedBack("Unknown command.","Error");
         }

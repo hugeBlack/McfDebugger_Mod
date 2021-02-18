@@ -12,7 +12,8 @@
     "ErrorHook",
     "ServerLoad",
     "FunctionCommandHook",
-    "ServerCommandSourceHook"
+    "ServerCommandSourceHook",
+    "CommandSourceHook"
   ],
   "client": [
     "ExampleMixin"
