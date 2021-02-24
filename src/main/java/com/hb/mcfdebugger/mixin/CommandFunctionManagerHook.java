@@ -26,10 +26,10 @@ public abstract class CommandFunctionManagerHook {
     MinecraftServer server;
     @Shadow
     @Final
-    ArrayDeque<CommandFunctionManager.Entry> chain = new ArrayDeque();
+    ArrayDeque<CommandFunctionManager.Entry> chain;
     @Shadow
     @Final
-    List<CommandFunctionManager.Entry> pending = Lists.newArrayList();
+    List<CommandFunctionManager.Entry> pending;
     @Shadow
     FunctionLoader field_25333;
 
