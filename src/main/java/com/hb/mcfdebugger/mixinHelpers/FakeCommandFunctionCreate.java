@@ -11,7 +11,9 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.function.CommandFunction;
 import net.minecraft.util.Identifier;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FakeCommandFunctionCreate {
     public static CommandFunction create(Identifier id, CommandDispatcher<ServerCommandSource> commandDispatcher, ServerCommandSource serverCommandSource, List<String> list) {
@@ -19,6 +21,12 @@ public class FakeCommandFunctionCreate {
 
         for(int i = 0; i < list.size(); ++i) {
             int j = i + 1;
+            //modified
+            McfDebugger.nowFunNamespace=id.getNamespace();
+            McfDebugger.nowFunPath=id.getPath();
+            McfDebugger.nowIndex=i;
+            McfDebugger.nowIsLastCmd=(i == list.size()-1);
+            //modified
             String string = ((String)list.get(i)).trim();
             StringReader stringReader = new StringReader(string);
             if (stringReader.canRead() && (stringReader.peek() != '#'|| string.substring(0,2).equals("#@"))) {
@@ -47,11 +55,7 @@ public class FakeCommandFunctionCreate {
                     }                    if (parseResults.getReader().canRead()) {
                         throw CommandManager.getException(parseResults);
                     }
-                    //modified
-                    McfDebugger.nowFunNamespace=id.getNamespace();
-                    McfDebugger.nowFunPath=id.getPath();
-                    McfDebugger.nowIndex=i;
-                    McfDebugger.nowIsLastCmd=(i == list.size()-1);
+
                     list2.add(new CommandFunction.CommandElement(parseResults));
                 } catch (CommandSyntaxException var10) {
                     IllegalArgumentException e = new IllegalArgumentException("Whilst parsing command on line " + j + ": " + var10.getMessage());

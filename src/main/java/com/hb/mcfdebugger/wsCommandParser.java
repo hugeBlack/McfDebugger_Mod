@@ -134,7 +134,7 @@ public class wsCommandParser {
                 SendFeedBack("reloaded.","Success");
                 break;
             case "getVersion":
-                DebugThread.sendObjMsgToDebugger("2","versionResult");
+                DebugThread.sendObjMsgToDebugger("3","versionResult");
             default:
                 SendFeedBack("Unknown command.","Error");
         }
