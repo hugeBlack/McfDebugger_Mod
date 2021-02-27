@@ -25,11 +25,15 @@ public class FakeCommandFunctionCreate {
                 if (stringReader.peek() == '/') {
                     stringReader.skip();
                     if (stringReader.peek() == '/') {
-                        throw new IllegalArgumentException("Unknown or invalid command '" + string + "' on line " + j + " (if you intended to make a comment, use '#' not '//')");
+                        IllegalArgumentException e= new IllegalArgumentException("Unknown or invalid command '" + string + "' on line " + j + " (if you intended to make a comment, use '#' not '//')");
+                        SendSyntaxError.send(e);
+                        throw e;
                     }
 
                     String string2 = stringReader.readUnquotedString();
-                    throw new IllegalArgumentException("Unknown or invalid command '" + string + "' on line " + j + " (did you mean '" + string2 + "'? Do not use a preceding forwards slash.)");
+                    IllegalArgumentException e = new IllegalArgumentException("Unknown or invalid command '" + string + "' on line " + j + " (did you mean '" + string2 + "'? Do not use a preceding forwards slash.)");
+                    SendSyntaxError.send(e);
+                    throw e;
                 }
 
                 try {
@@ -50,7 +54,9 @@ public class FakeCommandFunctionCreate {
                     McfDebugger.nowIsLastCmd=(i == list.size()-1);
                     list2.add(new CommandFunction.CommandElement(parseResults));
                 } catch (CommandSyntaxException var10) {
-                    throw new IllegalArgumentException("Whilst parsing command on line " + j + ": " + var10.getMessage());
+                    IllegalArgumentException e = new IllegalArgumentException("Whilst parsing command on line " + j + ": " + var10.getMessage());
+                    SendSyntaxError.send(e);
+                    throw e;
                 }
             }
         }
