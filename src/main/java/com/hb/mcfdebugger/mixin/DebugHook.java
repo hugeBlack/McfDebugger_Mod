@@ -30,11 +30,13 @@ public abstract class DebugHook implements CommandFunction.Element{
         } catch (ReflectiveOperationException e) { }
         if(isLastCmd) {
             int i =McfDebugger.tagFunctionLeft.size()-1;
-            if(McfDebugger.tagFunctionLeft.get(i)<=1){
-                McfDebugger.stackList.remove(McfDebugger.stackList.size() - 1);
-                McfDebugger.tagFunctionLeft.remove(i);
-            }else{
-                McfDebugger.tagFunctionLeft.set(i,McfDebugger.tagFunctionLeft.get(i)-1);
+            if(i>=0){
+                if(McfDebugger.tagFunctionLeft.get(i)<=1){
+                    McfDebugger.stackList.remove(McfDebugger.stackList.size() - 1);
+                    McfDebugger.tagFunctionLeft.remove(i);
+                }else{
+                    McfDebugger.tagFunctionLeft.set(i,McfDebugger.tagFunctionLeft.get(i)-1);
+                }
             }
         }
         //origin
