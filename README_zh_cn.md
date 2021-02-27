@@ -54,4 +54,5 @@ VSCode插件部分只会读取你的数据包，因此你的数据包是安全�
    A:因为Fabric光速支持快照等版本而FML更新慢。
 2. Q:为什么游戏关闭不了？  
    A:检查一下你的调试器VSCode部分是不是正在暂停状态，否则超时时间一过就会自动关闭，**切记不要去杀进程，可能会导致存档损坏**
-3. ...
+3. Q:为什么提示文字显示不正常？
+   A:请安装[Fabric-Api](https://www.curseforge.com/minecraft/mc-mods/fabric-api)!

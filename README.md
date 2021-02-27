@@ -56,4 +56,5 @@ Also, since it communicate with the game with Websocket your device may be attac
    A:Because Fabric supports Snapshots quickly while Forge don't.
 2. Q: Why I can't stop my game?  
    A:Check if the game is paused by a exception in VSCode. If it isn't, wait for the timeout and the game will quit automatically (that's why you should set a short timeout!). **NEVER shut down the game in that state with task manager or other means** because it may damage your save!
-3. ...
+3. Q:Why translable texts were not displayed correctly?  
+   A:Please Install [Fabric-Api](https://www.curseforge.com/minecraft/mc-mods/fabric-api)!
