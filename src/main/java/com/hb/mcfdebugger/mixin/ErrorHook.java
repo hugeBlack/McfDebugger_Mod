@@ -43,13 +43,8 @@ public class ErrorHook {
         McfDebugger.lastCmdObj.exception=message;
         McfDebugger.lastCmdObj.pause=true;
         Map<String,String> sourceMap =new LinkedHashMap<>();
-        if(source.getEntity()!=null){
-            sourceMap.put("entityName",source.getEntity().getEntityName());
-            sourceMap.put("entityUuid",source.getEntity().getUuidAsString());
-        }else{
-            sourceMap.put("entityName","None(Server)");
-            sourceMap.put("entityUuid","None");
-        }
+        sourceMap.put("entityName",source.getEntity().getEntityName());
+        sourceMap.put("entityUuid",source.getEntity().getUuidAsString());
         sourceMap.put("pos" ,source.getPosition().toString());
         sourceMap.put("rotation","("+source.getRotation().y+", "+source.getRotation().x+")");
         sourceMap.put("world",source.getWorld().getRegistryKey().getValue().toString());

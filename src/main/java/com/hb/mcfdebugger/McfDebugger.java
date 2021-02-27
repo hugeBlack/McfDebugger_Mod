@@ -12,6 +12,7 @@ import net.minecraft.util.WorldSavePath;
 import java.util.*;
 
 public class McfDebugger implements ModInitializer {
+	//public static Map<Identifier, CommandFunction> lastFunctionMap;
 	public static boolean isThisModDebugging=false;
 
 	public static class HbCmdObj{

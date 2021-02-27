@@ -39,19 +39,14 @@ public class SendCommandState {
             if(McfDebugger.debuggerMode.equals("byStep")|| wsCommandParser.isInPauseList(funNamespace,funPath,cmdIndex)){
 
                 Map<String,String> sourceMap =new LinkedHashMap<>();
-                if(source.getEntity()!=null){
-                    sourceMap.put("entityName",source.getEntity().getEntityName());
-                    sourceMap.put("entityUuid",source.getEntity().getUuidAsString());
-                }else{
-                    sourceMap.put("entityName","None(Server)");
-                    sourceMap.put("entityUuid","None");
-                }
+                sourceMap.put("entityName",source.getEntity().getEntityName());
+                sourceMap.put("entityUuid",source.getEntity().getUuidAsString());
                 sourceMap.put("pos" ,source.getPosition().toString());
                 sourceMap.put("rotation","("+source.getRotation().x+", "+source.getRotation().y+")");
                 sourceMap.put("world",source.getWorld().getRegistryKey().getValue().toString());
                 try {
-                    Method levelMethod = source.getClass().getDeclaredMethod("fakeGetLevel");
-                    sourceMap.put("level",String.valueOf(levelMethod.invoke(source)));
+                    Field levelField = source.getClass().getDeclaredField("fakeLevel");
+                    sourceMap.put("level",String.valueOf(levelField.get(element)));
                 } catch (ReflectiveOperationException e) {
                     DebugThread.sendObjMsgToDebugger(e.getMessage(),"e");
                 }
