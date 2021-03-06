@@ -14,8 +14,8 @@ import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.CommandBlockExecutor;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -136,11 +136,11 @@ public class wsCommandParser {
                 SendFeedBack("reloaded.","Success");
                 break;
             case "getVersion":
-                DebugThread.sendObjMsgToDebugger("3","versionResult");
+                DebugThread.sendObjMsgToDebugger("4","versionResult");
                 break;
             case "setFeatures":
                 ConfigHolder.resetFeature();
-                LinkedList featureList = (LinkedList) commandObj.get("features");
+                ArrayList<String> featureList = (ArrayList<String>) commandObj.get("features");
                 for(Object featureObj:featureList){
                     String feature = featureObj.toString();
                     switch (feature){

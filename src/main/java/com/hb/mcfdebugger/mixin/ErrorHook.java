@@ -26,7 +26,7 @@ public class ErrorHook {
         try {
             element.execute(manager, source, stack, maxChainLength);
         } catch (Throwable var4) {
-            if (!ConfigHolder.debuggerMode.equals("none")) {
+            if (!ConfigHolder.debuggerMode.equals("none")&&!ConfigHolder.nonStopOnException) {
                 String exceptionMsg = var4.toString();
                 if (exceptionMsg != "") {
                     if (McfDebugger.lastCmdObj!=null && !McfDebugger.lastCmdObj.toSimple().isNext(McfDebugger.nowMuteCmd)) {
