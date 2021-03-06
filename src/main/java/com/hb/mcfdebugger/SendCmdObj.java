@@ -12,7 +12,7 @@ public class SendCmdObj{
     public Integer cmdIndex;
     public boolean pause;
     public String exception="";
-    public Map<String,String> source=new HashMap<String,String>();
+    public Map<String,String> source=new HashMap<>();
     public SendCmdObj(String funNamespace, String funPath, Integer cmdIndex, String cmdContent, Boolean pause, @Nullable Map<String,String> source){
         this.funNamespace=funNamespace;
         this.cmdContent=cmdContent;
@@ -20,5 +20,8 @@ public class SendCmdObj{
         this.cmdIndex=cmdIndex;
         this.pause=pause;
         if(source!=null){this.source=source;}
+    }
+    public SimpleCmdObj toSimple(){
+        return new SimpleCmdObj(this.funNamespace,this.funPath,this.cmdIndex);
     }
 }

@@ -16,17 +16,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ServerCommandSourceHook {
     @Inject(method = "sendFeedback", at = @At("RETURN"))
     public void sendFeedback(Text message, boolean broadcastToOps, CallbackInfo ci) throws CommandSyntaxException {
-        if (McfDebugger.lastCmdObj!=null && (McfDebugger.lastCmdObj.funNamespace.equals(McfDebugger.nowLoudFunNamespace) && McfDebugger.lastCmdObj.funPath.equals(McfDebugger.nowLoudFunPath) && McfDebugger.lastCmdObj.cmdIndex == McfDebugger.nowLoudIndex + 1)) {
+        if (McfDebugger.lastCmdObj!=null && McfDebugger.lastCmdObj.toSimple().isNext(McfDebugger.nowLoudCmd)) {
             McfDebugger.hbPair send=new McfDebugger.hbPair("output",message.getString());
             DebugThread.sendObjMsgToDebugger(send,"loudResult");
-            McfDebugger.nowLoudFunNamespace="";
+            McfDebugger.nowLoudCmd.clear();
             throw DebuggerCommand.LOGGER_HIT_EXCEPTION.create();
         }
-        if (McfDebugger.lastCmdObj!=null && (McfDebugger.lastCmdObj.funNamespace.equals(McfDebugger.nowLogFunNamespace) && McfDebugger.lastCmdObj.funPath.equals(McfDebugger.nowLogFunPath) && McfDebugger.lastCmdObj.cmdIndex == McfDebugger.nowLogIndex + 1)) {
+        if (McfDebugger.lastCmdObj!=null && McfDebugger.lastCmdObj.toSimple().isNext(McfDebugger.nowLogCmd)) {
 
             McfDebugger.hbPair send=new McfDebugger.hbPair("output",new McfDebugger.hbPair(message.getString(),McfDebugger.lastCmdObj));
             DebugThread.sendObjMsgToDebugger(send,"logResult");
-            McfDebugger.nowLogFunNamespace="";
+            McfDebugger.nowLogCmd.clear();
         }
     }
 }

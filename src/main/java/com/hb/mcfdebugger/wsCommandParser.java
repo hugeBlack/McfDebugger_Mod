@@ -3,6 +3,7 @@ package com.hb.mcfdebugger;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import com.hb.mcfdebugger.commandHelpers.ReadScoreboard;
+import com.hb.mcfdebugger.config.ConfigHolder;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.MessageType;
 import net.minecraft.server.command.ServerCommandSource;
@@ -14,6 +15,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.CommandBlockExecutor;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -84,7 +86,7 @@ public class wsCommandParser {
                     break;
                 }
                 if(inModeList(mode)){
-                    McfDebugger.debuggerMode=mode;
+                    ConfigHolder.debuggerMode=mode;
                     SendFeedBack("Mode switched.","Success");
                 }else{
                     SendFeedBack("Unknown mode.","Error");
@@ -135,6 +137,22 @@ public class wsCommandParser {
                 break;
             case "getVersion":
                 DebugThread.sendObjMsgToDebugger("3","versionResult");
+                break;
+            case "setFeatures":
+                ConfigHolder.resetFeature();
+                LinkedList featureList = (LinkedList) commandObj.get("features");
+                for(Object featureObj:featureList){
+                    String feature = featureObj.toString();
+                    switch (feature){
+                        case "--stopOnException":
+                            ConfigHolder.nonStopOnException=true;
+                            break;
+                        case "debugThisMod":
+                            ConfigHolder.isThisModDebugging=true;
+                            break;
+                    }
+                }
+                break;
             default:
                 SendFeedBack("Unknown command.","Error");
         }

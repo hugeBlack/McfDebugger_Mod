@@ -1,5 +1,7 @@
 package com.hb.mcfdebugger;
 
+import com.hb.mcfdebugger.config.ConfigHolder;
+
 public class PauseWaiter {
     public static long lastHeartBeatSet=0;
 
@@ -8,7 +10,7 @@ public class PauseWaiter {
         while (!DebugThread.nextStep) {
             try {
                 if(DebugThread.wsserver.getConnections().size()<=0){
-                    McfDebugger.debuggerMode="none";
+                    ConfigHolder.debuggerMode="none";
                     break;
                 }
                 Thread.sleep(100);

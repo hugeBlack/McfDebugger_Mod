@@ -2,6 +2,7 @@ package com.hb.mcfdebugger.mixinHelpers;
 
 import com.google.common.collect.Lists;
 import com.hb.mcfdebugger.McfDebugger;
+import com.hb.mcfdebugger.SimpleCmdObj;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.StringReader;
@@ -22,9 +23,7 @@ public class FakeCommandFunctionCreate {
         for(int i = 0; i < list.size(); ++i) {
             int j = i + 1;
             //modified
-            McfDebugger.nowFunNamespace=id.getNamespace();
-            McfDebugger.nowFunPath=id.getPath();
-            McfDebugger.nowIndex=i;
+            McfDebugger.nowCmd=new SimpleCmdObj(id.getNamespace(),id.getPath(),i);
             McfDebugger.nowIsLastCmd=(i == list.size()-1);
             //modified
             String string = ((String)list.get(i)).trim();

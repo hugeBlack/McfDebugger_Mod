@@ -1,5 +1,6 @@
 package com.hb.mcfdebugger;
 
+import com.hb.mcfdebugger.config.ConfigHolder;
 import com.hb.mcfdebugger.config.ConfigManager;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.command.CommandSource;
@@ -23,29 +24,18 @@ public class McfDebugger implements ModInitializer {
 		}
 	}
 
-	public static String nowFunNamespace="";
-	public static String nowFunPath="";
-	public static int nowIndex=0;
+	public static SimpleCmdObj nowCmd = new SimpleCmdObj();
 	public static boolean nowIsLastCmd=false;
 
-	public static String debuggerMode="none";
 	public static SendCmdObj lastCmdObj;
 	public static MinecraftServer mcServer;
 
 	public static int nowCommandCount=0;
 	public static int commandsLeftToMaxChainLength=0;
 
-	public static String nowMuteFunNamespace="";
-	public static String nowMuteFunPath="";
-	public static int nowMuteIndex=0;
-
-	public static String nowLoudFunNamespace="";
-	public static String nowLoudFunPath="";
-	public static int nowLoudIndex=0;
-
-	public static String nowLogFunNamespace="";
-	public static String nowLogFunPath="";
-	public static int nowLogIndex=0;
+	public static SimpleCmdObj nowMuteCmd = new SimpleCmdObj();
+	public static SimpleCmdObj nowLoudCmd = new SimpleCmdObj();
+	public static SimpleCmdObj nowLogCmd = new SimpleCmdObj();
 
 	public static List<hbPair> stackList= new LinkedList<>();
 	public static List<Integer> tagFunctionLeft= new LinkedList<>();
@@ -71,8 +61,9 @@ public class McfDebugger implements ModInitializer {
 
 	}
 	public static void LOG(Object msgObj){
-		if(isThisModDebugging){
+		if(ConfigHolder.isThisModDebugging){
 			System.out.println(msgObj.toString());
 		}
 	}
+
 }

@@ -3,6 +3,7 @@ package com.hb.mcfdebugger.commands;
 import com.hb.mcfdebugger.commandHelpers.GetEntity;
 import com.hb.mcfdebugger.McfDebugger;
 import com.hb.mcfdebugger.commandHelpers.ReadScoreboard;
+import com.hb.mcfdebugger.config.ConfigHolder;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
@@ -80,7 +81,7 @@ public class DebuggerCommand {
     }
 
     public static int execute_getScoreByEntity(CommandContext<ServerCommandSource> cmd) throws CommandSyntaxException {
-        if (!McfDebugger.debuggerMode.equals("none")) {
+        if (!ConfigHolder.debuggerMode.equals("none")) {
             ReadScoreboard.parseScoreboardByEntity(cmd);
             throw LOGGER_HIT_EXCEPTION.create();
         } else {
@@ -90,7 +91,7 @@ public class DebuggerCommand {
     }
 
     public static int execute_getScoreByObjective(CommandContext<ServerCommandSource> cmd) throws CommandSyntaxException {
-        if (!McfDebugger.debuggerMode.equals("none")) {
+        if (!ConfigHolder.debuggerMode.equals("none")) {
             ReadScoreboard.parseScoreboardByObjective(cmd);
             throw LOGGER_HIT_EXCEPTION.create();
         } else {
@@ -99,7 +100,7 @@ public class DebuggerCommand {
     }
 
     public static int getEntity(CommandContext<ServerCommandSource> cmd) throws CommandSyntaxException {
-        if (!McfDebugger.debuggerMode.equals("none")) {
+        if (!ConfigHolder.debuggerMode.equals("none")) {
             GetEntity.get(cmd);
             throw LOGGER_HIT_EXCEPTION.create();
         } else {
@@ -108,28 +109,22 @@ public class DebuggerCommand {
     }
 
     public static int loud(CommandContext<ServerCommandSource> cmd) throws CommandSyntaxException {
-        if (!McfDebugger.debuggerMode.equals("none")) {
-            McfDebugger.nowLoudFunNamespace = McfDebugger.lastCmdObj.funNamespace;
-            McfDebugger.nowLoudFunPath = McfDebugger.lastCmdObj.funPath;
-            McfDebugger.nowLoudIndex = McfDebugger.lastCmdObj.cmdIndex;
+        if (!ConfigHolder.debuggerMode.equals("none")) {
+            McfDebugger.nowLoudCmd=McfDebugger.lastCmdObj.toSimple();
         }
         return 1;
     }
 
     public static int log(CommandContext<ServerCommandSource> cmd) throws CommandSyntaxException {
-        if (!McfDebugger.debuggerMode.equals("none")) {
-            McfDebugger.nowLogFunNamespace = McfDebugger.lastCmdObj.funNamespace;
-            McfDebugger.nowLogFunPath = McfDebugger.lastCmdObj.funPath;
-            McfDebugger.nowLogIndex = McfDebugger.lastCmdObj.cmdIndex;
+        if (!ConfigHolder.debuggerMode.equals("none")) {
+            McfDebugger.nowLogCmd=McfDebugger.lastCmdObj.toSimple();
         }
         return 1;
     }
 
     public static int mute(CommandContext<ServerCommandSource> cmd) throws CommandSyntaxException {
-        if (!McfDebugger.debuggerMode.equals("none")) {
-            McfDebugger.nowMuteFunNamespace = McfDebugger.lastCmdObj.funNamespace;
-            McfDebugger.nowMuteFunPath = McfDebugger.lastCmdObj.funPath;
-            McfDebugger.nowMuteIndex = McfDebugger.lastCmdObj.cmdIndex;
+        if (!ConfigHolder.debuggerMode.equals("none")) {
+            McfDebugger.nowMuteCmd=McfDebugger.lastCmdObj.toSimple();
         }
         return 1;
     }

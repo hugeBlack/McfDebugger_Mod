@@ -1,6 +1,7 @@
 package com.hb.mcfdebugger.mixinHelpers;
 
 import com.hb.mcfdebugger.*;
+import com.hb.mcfdebugger.config.ConfigHolder;
 import net.minecraft.command.argument.Vec3ArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.command.ServerCommandSource;
@@ -16,7 +17,7 @@ import java.util.Map;
 
 public class SendCommandState {
     public static void send(CommandFunction.Element element, ServerCommandSource source){
-        if(!McfDebugger.debuggerMode.equals("none")) {
+        if(!ConfigHolder.debuggerMode.equals("none")) {
             String funNamespace = null;
             String funPath = null;
             Integer cmdIndex = -1;
@@ -36,7 +37,7 @@ public class SendCommandState {
             } catch (ReflectiveOperationException e) {
             }
 
-            if(McfDebugger.debuggerMode.equals("byStep")|| wsCommandParser.isInPauseList(funNamespace,funPath,cmdIndex)){
+            if(ConfigHolder.debuggerMode.equals("byStep")|| wsCommandParser.isInPauseList(funNamespace,funPath,cmdIndex)){
 
                 Map<String,String> sourceMap =new LinkedHashMap<>();
                 if(source.getEntity()!=null){

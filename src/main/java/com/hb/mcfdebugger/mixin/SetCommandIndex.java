@@ -6,8 +6,8 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(CommandFunction.CommandElement.class)
 public abstract class SetCommandIndex {
-    public String funNamespace= McfDebugger.nowFunNamespace;
-    public String funPath= McfDebugger.nowFunPath;
-    public int cmdIndex= McfDebugger.nowIndex;
+    public String funNamespace= McfDebugger.nowCmd.funNamespace;
+    public String funPath= McfDebugger.nowCmd.funPath;
+    public int cmdIndex= McfDebugger.nowCmd.cmdIndex;
     public boolean isLastCmd=McfDebugger.nowIsLastCmd;
 }

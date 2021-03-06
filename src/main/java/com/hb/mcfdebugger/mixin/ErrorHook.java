@@ -1,6 +1,7 @@
 package com.hb.mcfdebugger.mixin;
 
 import com.hb.mcfdebugger.*;
+import com.hb.mcfdebugger.config.ConfigHolder;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.function.CommandFunction;
 import net.minecraft.server.function.CommandFunctionManager;
@@ -25,18 +26,18 @@ public class ErrorHook {
         try {
             element.execute(manager, source, stack, maxChainLength);
         } catch (Throwable var4) {
-            if (!McfDebugger.debuggerMode.equals("none")) {
+            if (!ConfigHolder.debuggerMode.equals("none")) {
                 String exceptionMsg = var4.toString();
                 if (exceptionMsg != "") {
-                    if (McfDebugger.lastCmdObj!=null && !(McfDebugger.lastCmdObj.funNamespace.equals(McfDebugger.nowMuteFunNamespace) && McfDebugger.lastCmdObj.funPath.equals(McfDebugger.nowMuteFunPath) && McfDebugger.lastCmdObj.cmdIndex == McfDebugger.nowMuteIndex + 1)) {
+                    if (McfDebugger.lastCmdObj!=null && !McfDebugger.lastCmdObj.toSimple().isNext(McfDebugger.nowMuteCmd)) {
                         sendError(exceptionMsg);
 
                     }
                 }
             }
         }
-        if (McfDebugger.lastCmdObj!=null && McfDebugger.lastCmdObj.funNamespace.equals(McfDebugger.nowMuteFunNamespace) && McfDebugger.lastCmdObj.funPath.equals(McfDebugger.nowMuteFunPath) && McfDebugger.lastCmdObj.cmdIndex == McfDebugger.nowMuteIndex + 1) {
-            McfDebugger.nowMuteFunNamespace = "";
+        if (McfDebugger.lastCmdObj!=null && McfDebugger.lastCmdObj.toSimple().isNext(McfDebugger.nowMuteCmd)) {
+            McfDebugger.nowMuteCmd.clear();
         }
     }
     public void sendError(String message) {
