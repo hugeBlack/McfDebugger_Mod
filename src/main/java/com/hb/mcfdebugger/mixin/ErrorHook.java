@@ -2,6 +2,7 @@ package com.hb.mcfdebugger.mixin;
 
 import com.hb.mcfdebugger.*;
 import com.hb.mcfdebugger.config.ConfigHolder;
+import com.hb.mcfdebugger.mixinHelpers.ReadCommandSource;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.function.CommandFunction;
 import net.minecraft.server.function.CommandFunctionManager;
@@ -26,11 +27,11 @@ public class ErrorHook {
         try {
             element.execute(manager, source, stack, maxChainLength);
         } catch (Throwable var4) {
-            if (!ConfigHolder.debuggerMode.equals("none")&&!ConfigHolder.nonStopOnException) {
+            if (!ConfigHolder.debuggerMode.equals("none")) {
                 String exceptionMsg = var4.toString();
                 if (exceptionMsg != "") {
                     if (McfDebugger.lastCmdObj!=null && !McfDebugger.lastCmdObj.toSimple().isNext(McfDebugger.nowMuteCmd)) {
-                        sendError(exceptionMsg);
+                        sendError(exceptionMsg,ConfigHolder.nonStopOnException?1:0);
 
                     }
                 }
@@ -40,32 +41,18 @@ public class ErrorHook {
             McfDebugger.nowMuteCmd.clear();
         }
     }
-    public void sendError(String message) {
+    public void sendError(String message,int mode) {
         McfDebugger.lastCmdObj.exception=message;
         McfDebugger.lastCmdObj.pause=true;
-        Map<String,String> sourceMap =new LinkedHashMap<>();
-        if(source.getEntity()!=null){
-            sourceMap.put("entityName",source.getEntity().getEntityName());
-            sourceMap.put("entityUuid",source.getEntity().getUuidAsString());
-        }else{
-            sourceMap.put("entityName","None(Server)");
-            sourceMap.put("entityUuid","None");
-        }
-        sourceMap.put("pos" ,source.getPosition().toString());
-        sourceMap.put("rotation","("+source.getRotation().y+", "+source.getRotation().x+")");
-        sourceMap.put("world",source.getWorld().getRegistryKey().getValue().toString());
-        try {
-            Method levelMethod = source.getClass().getDeclaredMethod("fakeGetLevel");
-            sourceMap.put("level", String.valueOf(levelMethod.invoke(source)));
-        } catch (ReflectiveOperationException e) {
-            sourceMap.put("level","Error");
-        }
-        sourceMap.put("commandsLeftToMaxChainLength", String.valueOf(McfDebugger.commandsLeftToMaxChainLength));
-        SendCmdObj sendCmdObj = new SendCmdObj(McfDebugger.lastCmdObj.funNamespace, McfDebugger.lastCmdObj.funPath, McfDebugger.lastCmdObj.cmdIndex, element.toString(),true,sourceMap);
+        SendCmdObj sendCmdObj = new SendCmdObj(McfDebugger.lastCmdObj.funNamespace, McfDebugger.lastCmdObj.funPath, McfDebugger.lastCmdObj.cmdIndex, element.toString(),true, ReadCommandSource.read(source));
         sendCmdObj.exception=message;
-        DebugThread.sendObjMsgToDebugger(McfDebugger.stackList,"stackReport");
-        DebugThread.sendObjMsgToDebugger(sendCmdObj,"errorCommandReport");
-
-        PauseWaiter.WaitForNext();
+        if(mode==0||McfDebugger.howeverStop){
+            McfDebugger.howeverStop=false;
+            DebugThread.sendObjMsgToDebugger(McfDebugger.stackList,"stackReport");
+            DebugThread.sendObjMsgToDebugger(sendCmdObj,"errorCommandReport");
+            PauseWaiter.WaitForNext();
+        }else if (mode==1){
+            DebugThread.sendObjMsgToDebugger(sendCmdObj,"nonStopErrorCommandReport");
+        }
     }
 }

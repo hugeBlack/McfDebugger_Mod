@@ -47,7 +47,7 @@ public class FakeCommandFunctionCreate {
                     //modified
                     ParseResults<ServerCommandSource> parseResults;
 
-                    if(!string.substring(0,2).equals("#@")){
+                    if(!string.startsWith("#@")){
                         parseResults = commandDispatcher.parse(stringReader, serverCommandSource);
                     }else{
                         parseResults = commandDispatcher.parse(new StringReader("debuggerCmd "+string.substring(2)), serverCommandSource);

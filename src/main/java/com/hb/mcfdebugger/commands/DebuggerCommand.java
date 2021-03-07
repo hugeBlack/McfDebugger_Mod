@@ -83,6 +83,7 @@ public class DebuggerCommand {
     public static int execute_getScoreByEntity(CommandContext<ServerCommandSource> cmd) throws CommandSyntaxException {
         if (!ConfigHolder.debuggerMode.equals("none")) {
             ReadScoreboard.parseScoreboardByEntity(cmd);
+            McfDebugger.howeverStop=true;
             throw LOGGER_HIT_EXCEPTION.create();
         } else {
             return 1;
@@ -93,6 +94,7 @@ public class DebuggerCommand {
     public static int execute_getScoreByObjective(CommandContext<ServerCommandSource> cmd) throws CommandSyntaxException {
         if (!ConfigHolder.debuggerMode.equals("none")) {
             ReadScoreboard.parseScoreboardByObjective(cmd);
+            McfDebugger.howeverStop=true;
             throw LOGGER_HIT_EXCEPTION.create();
         } else {
             return 1;
@@ -102,6 +104,7 @@ public class DebuggerCommand {
     public static int getEntity(CommandContext<ServerCommandSource> cmd) throws CommandSyntaxException {
         if (!ConfigHolder.debuggerMode.equals("none")) {
             GetEntity.get(cmd);
+            McfDebugger.howeverStop=true;
             throw LOGGER_HIT_EXCEPTION.create();
         } else {
             return 1;

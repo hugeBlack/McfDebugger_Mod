@@ -38,26 +38,7 @@ public class SendCommandState {
             }
 
             if(ConfigHolder.debuggerMode.equals("byStep")|| wsCommandParser.isInPauseList(funNamespace,funPath,cmdIndex)){
-
-                Map<String,String> sourceMap =new LinkedHashMap<>();
-                if(source.getEntity()!=null){
-                    sourceMap.put("entityName",source.getEntity().getEntityName());
-                    sourceMap.put("entityUuid",source.getEntity().getUuidAsString());
-                }else{
-                    sourceMap.put("entityName","None(Server)");
-                    sourceMap.put("entityUuid","None");
-                }
-                sourceMap.put("pos" ,source.getPosition().toString());
-                sourceMap.put("rotation","("+source.getRotation().x+", "+source.getRotation().y+")");
-                sourceMap.put("world",source.getWorld().getRegistryKey().getValue().toString());
-                try {
-                    Method levelMethod = source.getClass().getDeclaredMethod("fakeGetLevel");
-                    sourceMap.put("level",String.valueOf(levelMethod.invoke(source)));
-                } catch (ReflectiveOperationException e) {
-                    DebugThread.sendObjMsgToDebugger(e.getMessage(),"e");
-                }
-                sourceMap.put("commandsLeftToMaxChainLength", String.valueOf(McfDebugger.commandsLeftToMaxChainLength));
-                SendCmdObj sendCmdObj = new SendCmdObj(funNamespace, funPath, cmdIndex, element.toString(),true,sourceMap);
+                SendCmdObj sendCmdObj = new SendCmdObj(funNamespace, funPath, cmdIndex, element.toString(),true,ReadCommandSource.read(source));
                 McfDebugger.lastCmdObj=sendCmdObj;
                 DebugThread.sendObjMsgToDebugger(McfDebugger.stackList,"stackReport");
                 DebugThread.sendObjMsgToDebugger(sendCmdObj,"commandReport");
