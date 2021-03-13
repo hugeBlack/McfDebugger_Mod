@@ -3,8 +3,8 @@ import com.hb.mcfdebugger.DebugThread;
 import com.hb.mcfdebugger.McfDebugger;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.command.argument.ObjectiveArgumentType;
 import net.minecraft.command.argument.ScoreHolderArgumentType;
+import net.minecraft.command.argument.ScoreboardObjectiveArgumentType;
 import net.minecraft.scoreboard.ScoreboardObjective;
 import net.minecraft.scoreboard.ScoreboardPlayerScore;
 import net.minecraft.scoreboard.ServerScoreboard;
@@ -34,7 +34,7 @@ public class ReadScoreboard {
     }
     public static void parseScoreboardByObjective(CommandContext commandContext) throws CommandSyntaxException {
         ServerScoreboard objectives = McfDebugger.mcServer.getScoreboard();
-        ScoreboardObjective objective= ObjectiveArgumentType.getObjective(commandContext,"objective");
+        ScoreboardObjective objective= ScoreboardObjectiveArgumentType.getObjective(commandContext,"objective");
         Collection<ScoreboardPlayerScore> scores=objectives.getAllPlayerScores(objective);
         ObjectiveScorePair objectiveScorePair = new ObjectiveScorePair(objective.getName(),scores);
         DebugThread.sendObjMsgToDebugger(objectiveScorePair,"getScoresResultByObjective");

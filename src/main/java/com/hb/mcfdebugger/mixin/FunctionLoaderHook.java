@@ -38,8 +38,6 @@ import java.util.concurrent.CompletionException;
 import java.util.concurrent.Executor;
 import com.hb.mcfdebugger.mixinHelpers.FakeCommandFunctionCreate;
 
-import java.util.Map;
-
 @Mixin(FunctionLoader.class)
 public abstract class FunctionLoaderHook implements ResourceReloadListener{
     @Shadow @Final TagGroupLoader<CommandFunction> tagLoader;
@@ -54,7 +52,9 @@ public abstract class FunctionLoaderHook implements ResourceReloadListener{
 
     @Overwrite
     public CompletableFuture<Void> reload(ResourceReloadListener.Synchronizer synchronizer, ResourceManager manager, Profiler prepareProfiler, Profiler applyProfiler, Executor prepareExecutor, Executor applyExecutor) {
-        CompletableFuture<Map<Identifier, Tag.Builder>> completableFuture = this.tagLoader.prepareReload(manager, prepareExecutor);
+        CompletableFuture<Map<Identifier, Tag.Builder>> completableFuture = CompletableFuture.supplyAsync(() -> {
+            return this.tagLoader.loadTags(manager);
+        }, prepareExecutor);
         CompletableFuture<Map<Identifier, CompletableFuture<CommandFunction>>> completableFuture2 = CompletableFuture.supplyAsync(() -> {
             return manager.findResources("functions", (string) -> {
                 return string.endsWith(".mcfunction");
@@ -97,7 +97,7 @@ public abstract class FunctionLoaderHook implements ResourceReloadListener{
                 }).join();
             });
             this.functions = builder.build();
-            this.tags = this.tagLoader.applyReload((Map)((Pair)pair).getFirst());
+            this.tags = this.tagLoader.buildGroup((Map)((Pair)pair).getFirst());
         }, applyExecutor);
     }
     private static List<String> readLines(ResourceManager resourceManager, Identifier id) {

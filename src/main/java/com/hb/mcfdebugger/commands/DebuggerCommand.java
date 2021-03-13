@@ -41,7 +41,7 @@ public class DebuggerCommand {
                                 )
                         )
                         .then(CommandManager.literal("byObjective")
-                                .then(CommandManager.argument("objective", ObjectiveArgumentType.objective())
+                                .then(CommandManager.argument("objective", ScoreboardObjectiveArgumentType.scoreboardObjective())
                                         .executes((CommandContext<ServerCommandSource> cmd) -> {
                                                     McfDebugger.nowCommandCount--;
                                                     return DebuggerCommand.execute_getScoreByObjective(cmd);

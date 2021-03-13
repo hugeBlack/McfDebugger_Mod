@@ -2,6 +2,7 @@ package com.hb.mcfdebugger.mixin;
 
 import java.lang.reflect.Field;
 import java.util.ArrayDeque;
+import java.util.Deque;
 
 import com.hb.mcfdebugger.*;
 import com.hb.mcfdebugger.mixinHelpers.SendCommandState;
@@ -21,7 +22,7 @@ public abstract class DebugHook implements CommandFunction.Element{
     CommandFunction.Element element=(CommandFunction.Element)this;
     @Shadow @Final ParseResults<ServerCommandSource> parsed;
     @Overwrite
-    public void execute (CommandFunctionManager manager, ServerCommandSource source, ArrayDeque<CommandFunctionManager.Entry> stack, int maxChainLength) throws CommandSyntaxException {
+    public void execute (CommandFunctionManager manager, ServerCommandSource source, Deque<CommandFunctionManager.Entry> entries, int maxChainLength) throws CommandSyntaxException {
         SendCommandState.send(element,source);
         boolean isLastCmd=false;
         try {

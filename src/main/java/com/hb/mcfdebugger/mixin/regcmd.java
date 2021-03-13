@@ -1,6 +1,5 @@
 package com.hb.mcfdebugger.mixin;
 import com.hb.mcfdebugger.commands.*;
-import com.hb.mcfdebugger.commands.DebuggerCommand;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;

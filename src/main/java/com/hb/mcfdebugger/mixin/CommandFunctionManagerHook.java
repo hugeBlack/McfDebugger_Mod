@@ -31,7 +31,7 @@ public abstract class CommandFunctionManagerHook {
     @Final
     List<CommandFunctionManager.Entry> pending = Lists.newArrayList();
     @Shadow
-    FunctionLoader field_25333;
+    FunctionLoader loader;
 
     @Shadow
     abstract int getMaxCommandChainLength();
@@ -55,7 +55,7 @@ public abstract class CommandFunctionManagerHook {
                     this.chain.push(new CommandFunctionManager.Entry((CommandFunctionManager) (Object) this, source, elements[k]));
                 }
                 //modified
-                SendFunctionState.send(this.field_25333, source, function);
+                SendFunctionState.send(this.loader, source, function);
                 //modified
                 while (!this.chain.isEmpty()) {
                     try {
