@@ -11,14 +11,12 @@ version = project.mod_version
 group = project.maven_group
 
 dependencies {
-    minecraft "com.mojang:minecraft:21w10a"
-    mappings "net.fabricmc:yarn:21w10a+build.10:v2"
-    modImplementation "net.fabricmc:fabric-loader:0.11.1"
-	compile group: 'org.java-websocket', name: 'Java-WebSocket', version: '1.5.1'
-
-
+	minecraft "com.mojang:minecraft:21w11a"
+	mappings "net.fabricmc:yarn:21w11a+build.8:v2"
+	modImplementation "net.fabricmc:fabric-loader:0.11.3"
 	//Fabric api
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.32.2+1.17"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:0.32.4+1.17"
+	compile group: 'org.java-websocket', name: 'Java-WebSocket', version: '1.5.1'
 }
 
 processResources {

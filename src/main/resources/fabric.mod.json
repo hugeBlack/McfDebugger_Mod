@@ -29,7 +29,7 @@
 
   "depends": {
     "fabricloader": ">=0.7.4",
-    "minecraft": "1.17-alpha.21.10.a"
+    "minecraft": "1.17-alpha.21.11.a"
   },
   "suggests": {
     "another-mod": "*"
