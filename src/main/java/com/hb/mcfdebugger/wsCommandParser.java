@@ -136,7 +136,7 @@ public class wsCommandParser {
                 SendFeedBack("reloaded.","Success");
                 break;
             case "getVersion":
-                DebugThread.sendObjMsgToDebugger("4","versionResult");
+                DebugThread.sendObjMsgToDebugger("5","versionResult");
                 break;
             case "setFeatures":
                 ConfigHolder.resetFeature();
