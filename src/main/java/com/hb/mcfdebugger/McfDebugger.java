@@ -67,4 +67,7 @@ public class McfDebugger implements ModInitializer {
 	}
 
 	public static boolean howeverStop = false;
+
+	public static boolean stepOut = false;
+	public static boolean stepIn = false;
 }

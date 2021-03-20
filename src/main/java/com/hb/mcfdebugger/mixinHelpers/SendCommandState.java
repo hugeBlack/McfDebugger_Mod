@@ -37,7 +37,8 @@ public class SendCommandState {
             } catch (ReflectiveOperationException e) {
             }
 
-            if(ConfigHolder.debuggerMode.equals("byStep")|| wsCommandParser.isInPauseList(funNamespace,funPath,cmdIndex)){
+            if(ConfigHolder.debuggerMode.equals("byStep")|| (cmdIndex==1 && McfDebugger.stepIn) ||wsCommandParser.isInPauseList(funNamespace,funPath,cmdIndex)){
+                McfDebugger.stepIn=false;
                 SendCmdObj sendCmdObj = new SendCmdObj(funNamespace, funPath, cmdIndex, element.toString(),true,ReadCommandSource.read(source));
                 McfDebugger.lastCmdObj=sendCmdObj;
                 DebugThread.sendObjMsgToDebugger(McfDebugger.stackList,"stackReport");

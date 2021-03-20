@@ -153,6 +153,14 @@ public class wsCommandParser {
                     }
                 }
                 break;
+            case "stepOut":
+                McfDebugger.stepOut=true;
+                SendFeedBack("step out!","Success");
+                break;
+            case "stepIn":
+                McfDebugger.stepIn=true;
+                SendFeedBack("step in!","Success");
+                break;
             default:
                 SendFeedBack("Unknown command.","Error");
         }
