@@ -7,7 +7,7 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.Entity;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
-import net.minecraft.resource.ResourceReloadListener;
+import net.minecraft.resource.ResourceReloader;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandOutput;
 import net.minecraft.server.command.ServerCommandSource;
@@ -39,7 +39,7 @@ import java.util.concurrent.Executor;
 import com.hb.mcfdebugger.mixinHelpers.FakeCommandFunctionCreate;
 
 @Mixin(FunctionLoader.class)
-public abstract class FunctionLoaderHook implements ResourceReloadListener{
+public abstract class FunctionLoaderHook implements ResourceReloader {
     @Shadow @Final TagGroupLoader<CommandFunction> tagLoader;
     @Shadow abstract Optional<CommandFunction> get(Identifier id);
     private static final int PATH_PREFIX_LENGTH = "functions/".length();
@@ -51,7 +51,7 @@ public abstract class FunctionLoaderHook implements ResourceReloadListener{
     @Shadow @Final int level;
 
     @Overwrite
-    public CompletableFuture<Void> reload(ResourceReloadListener.Synchronizer synchronizer, ResourceManager manager, Profiler prepareProfiler, Profiler applyProfiler, Executor prepareExecutor, Executor applyExecutor) {
+    public CompletableFuture<Void> reload(ResourceReloader.Synchronizer synchronizer, ResourceManager manager, Profiler prepareProfiler, Profiler applyProfiler, Executor prepareExecutor, Executor applyExecutor) {
         CompletableFuture<Map<Identifier, Tag.Builder>> completableFuture = CompletableFuture.supplyAsync(() -> {
             return this.tagLoader.loadTags(manager);
         }, prepareExecutor);

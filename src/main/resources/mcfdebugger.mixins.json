@@ -6,7 +6,6 @@
   "mixins": [
     "regcmd",
     "DebugHook",
-    "CommandFunctionManagerHook",
     "SetCommandIndex",
     "FunctionLoaderHook",
     "ErrorHook",

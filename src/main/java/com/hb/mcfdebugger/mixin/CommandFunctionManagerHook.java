@@ -1,26 +1,34 @@
 package com.hb.mcfdebugger.mixin;
 
+import com.google.common.collect.Queues;
 import com.hb.mcfdebugger.McfDebugger;
 import com.google.common.collect.Lists;
 import com.hb.mcfdebugger.mixinHelpers.SendFunctionState;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.function.CommandFunction;
 import net.minecraft.server.function.CommandFunctionManager;
 import net.minecraft.server.function.FunctionLoader;
+import net.minecraft.util.profiler.Profiler;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
+import java.util.Objects;
 
-@Mixin(CommandFunctionManager.class)
+/*@Mixin(CommandFunctionManager.Entry.class)
 public abstract class CommandFunctionManagerHook {
 
     @Shadow
-    boolean executing;
+    boolean justLoaded;
+    boolean executing = justLoaded;
     @Shadow
     @Final
     MinecraftServer server;
@@ -94,5 +102,33 @@ public abstract class CommandFunctionManagerHook {
             }
         }
     }
+    @Shadow @Final ServerCommandSource source;
+    @Shadow @Final int depth;
+    @Shadow @Final CommandFunction.Element element;
+    @Overwrite
+    public void execute(CommandFunctionManager manager, Deque<CommandFunctionManager.Entry> entries, int maxChainLength, @Nullable CommandFunctionManager.Tracer tracer) {
+        //modified
+        SendFunctionState.send(this.loader);
+        //modified
+        try {
+            CommandFunctionManager.Entry entry = (CommandFunctionManager.Entry) this.chain.removeFirst();
+            this.server.getProfiler().push(entry::toString);
+            //modified
+            McfDebugger.nowCommandCount = CommandFunctionManager.;
+            McfDebugger.commandsLeftToMaxChainLength = maxChainLength - j;
+            this.element.execute(manager, this.source, entries, maxChainLength, this.depth, tracer);
+        } catch (CommandSyntaxException var6) {
+            if (tracer != null) {
+                tracer.traceError(this.depth, var6.getRawMessage().getString());
+            }
+        } catch (Exception var7) {
+            if (tracer != null) {
+                tracer.traceError(this.depth, var7.getMessage());
+            }
+        }
+
+    }
+
 
 }
+*/

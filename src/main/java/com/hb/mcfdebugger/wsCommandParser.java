@@ -150,6 +150,9 @@ public class wsCommandParser {
                         case "debugThisMod":
                             ConfigHolder.isThisModDebugging=true;
                             break;
+                        case "executeCmdStopAtSuccess":
+                            ConfigHolder.executeCmdStopAtSuccess=true;
+                            break;
                     }
                 }
                 break;

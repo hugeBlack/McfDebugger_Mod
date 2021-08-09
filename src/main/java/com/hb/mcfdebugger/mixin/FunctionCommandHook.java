@@ -20,7 +20,7 @@ public class FunctionCommandHook {
         CommandFunction commandFunction;
         McfDebugger.lastCallCmdObj = McfDebugger.lastCmdObj==null?null:McfDebugger.lastCmdObj;
         McfDebugger.tagFunctionLeft.add(functions.size());
-        for (Iterator var3 = functions.iterator(); var3.hasNext(); i += source.getMinecraftServer().getCommandFunctionManager().execute(commandFunction, source.withSilent().withMaxLevel(2))) {
+        for (Iterator var3 = functions.iterator(); var3.hasNext(); i += source.getServer().getCommandFunctionManager().execute(commandFunction, source.withSilent().withMaxLevel(2))) {
 
             commandFunction = (CommandFunction) var3.next();
             //modified

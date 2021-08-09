@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class SendFunctionState {
-    public static void send(FunctionLoader f, CommandSource source, CommandFunction function) {
+    public static void send(FunctionLoader f) {
         Map<Identifier, CommandFunction> funMap = f.getFunctions();
         List<McfDebugger.HbCmdObj> a = funObjParse(funMap);
         DebugThread.sendObjMsgToDebugger(a, "functionList");

@@ -4,6 +4,7 @@ public class ConfigHolder {
     public static String debuggerMode="none";
     public static boolean isThisModDebugging=false;
     public static boolean nonStopOnException = false;
+    public static boolean executeCmdStopAtSuccess=false;
     public static void resetFeature(){
         nonStopOnException = false;
         isThisModDebugging=false;

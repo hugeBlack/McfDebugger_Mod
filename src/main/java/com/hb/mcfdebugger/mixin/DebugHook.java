@@ -12,6 +12,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.function.CommandFunction;
 import net.minecraft.server.function.CommandFunctionManager;
 
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -21,8 +22,10 @@ import org.spongepowered.asm.mixin.Shadow;
 public abstract class DebugHook implements CommandFunction.Element{
     CommandFunction.Element element=(CommandFunction.Element)this;
     @Shadow @Final ParseResults<ServerCommandSource> parsed;
+    @Shadow
+    abstract int execute(CommandFunctionManager manager, ServerCommandSource source) throws CommandSyntaxException;
     @Overwrite
-    public void execute (CommandFunctionManager manager, ServerCommandSource source, Deque<CommandFunctionManager.Entry> entries, int maxChainLength) throws CommandSyntaxException {
+    public void execute (CommandFunctionManager manager, ServerCommandSource source, Deque<CommandFunctionManager.Entry> entries, int maxChainLength, int depth, @Nullable CommandFunctionManager.Tracer tracer) throws CommandSyntaxException {
         SendCommandState.send(element,source);
         boolean isLastCmd=false;
         try {
@@ -41,7 +44,14 @@ public abstract class DebugHook implements CommandFunction.Element{
             }
         }
         //origin
-        manager.getDispatcher().execute(new ParseResults(this.parsed.getContext().withSource(source), this.parsed.getReader(), this.parsed.getExceptions()));
+        if (tracer != null) {
+            String string = this.parsed.getReader().getString();
+            tracer.traceCommandStart(depth, string);
+            int i = this.execute(manager, source);
+            tracer.traceCommandEnd(depth, string, i);
+        } else {
+            this.execute(manager, source);
+        }
         //origin
 
     }
