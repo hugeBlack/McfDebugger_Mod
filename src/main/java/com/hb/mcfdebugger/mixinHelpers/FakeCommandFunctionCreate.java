@@ -28,7 +28,7 @@ public class FakeCommandFunctionCreate {
             //modified
             String string = ((String)list.get(i)).trim();
             StringReader stringReader = new StringReader(string);
-            if (stringReader.canRead() && (stringReader.peek() != '#'|| string.substring(0,2).equals("#@"))) {
+            if (stringReader.canRead() && (stringReader.peek() != '#'|| string.startsWith("#@"))) {
                 if (stringReader.peek() == '/') {
                     stringReader.skip();
                     if (stringReader.peek() == '/') {
